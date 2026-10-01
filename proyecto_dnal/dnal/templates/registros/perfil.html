@@ -1,0 +1,39 @@
+{% extends 'principal.html' %} 
+
+{% block content %}
+<div class="container mt-4" style="max-width: 600px;">
+    <h2>Modificar Perfil</h2>
+    <hr>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <form method="POST">
+        {% csrf_token %}
+        
+        <div class="mb-3">
+            <label for="{{ form.username.id_for_label }}" class="form-label">Nombre de Usuario:</label>
+            {{ form.username }}
+            {% if form.username.errors %}
+                <div class="text-danger small">{{ form.username.errors }}</div>
+            {% endif %}
+        </div>
+
+        <div class="mb-3">
+            <label for="{{ form.email.id_for_label }}" class="form-label">Correo Electrónico (Gmail):</label>
+            {{ form.email }}
+            {% if form.email.errors %}
+                <div class="text-danger small">{{ form.email.errors }}</div>
+            {% endif %}
+        </div>
+
+        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+        <a href="{% url 'home' %}" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>D'NAL Reparaciones</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <style>
+
+        body {
+            background-color: #111111;
+            color: white;
+        }
+
+        /* NAVBAR */
+
+        .navbar {
+            background-color: #000000;
+            border-bottom: 2px solid #d71920;
+        }
+
+        .navbar-brand {
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+        }
+
+        .navbar-brand span {
+            color: #d71920;
+        }
+
+        .nav-link {
+            color: white !important;
+            margin-left: 10px;
+        }
+
+        .nav-link:hover {
+            color: #d71920 !important;
+        }
+
+        .btn-login {
+            border: 1px solid #d71920;
+            color: white;
+        }
+
+        .btn-login:hover {
+            background-color: #d71920;
+            color: white;
+        }
+
+        .btn-register {
+            background-color: #d71920;
+            color: white;
+        }
+
+        .btn-register:hover {
+            background-color: #f15a24;
+            color: white;
+        }
+
+
+        /* PRESENTACIÓN */
+
+        .principal {
+            min-height: 75vh;
+            background-color: #050505;
+            display: flex;
+            align-items: center;
+        }
+
+        .titulo {
+            font-size: 55px;
+            font-weight: bold;
+        }
+
+        .rojo {
+            color: #d71920;
+        }
+
+        .descripcion {
+            font-size: 21px;
+            color: #dddddd;
+            max-width: 700px;
+        }
+
+        .boton-principal {
+            background-color: #d71920;
+            color: white;
+            border: none;
+            padding: 13px 30px;
+            font-weight: bold;
+        }
+
+        .boton-principal:hover {
+            background-color: #f15a24;
+            color: white;
+        }
+
+
+        /* SERVICIOS */
+
+        .servicios {
+            background-color: #181818;
+            padding: 70px 0;
+        }
+
+        .titulo-seccion {
+            font-weight: bold;
+            margin-bottom: 45px;
+        }
+
+        .servicio {
+            background-color: #222222;
+            border-top: 4px solid #d71920;
+            padding: 30px 20px;
+            height: 100%;
+            transition: 0.3s;
+        }
+
+        .servicio:hover {
+            transform: translateY(-5px);
+        }
+
+        .icono {
+            font-size: 40px;
+            margin-bottom: 15px;
+        }
+
+        .servicio h4 {
+            color: #f15a24;
+        }
+
+        .servicio p {
+            color: #cccccc;
+        }
+
+
+        /* MARCAS */
+
+        .marcas {
+            background-color: #111111;
+            padding: 60px 0;
+        }
+
+        .marca {
+            background-color: #1d1d1d;
+            padding: 25px;
+            font-size: 24px;
+            font-weight: bold;
+            border-radius: 5px;
+        }
+
+
+        /* CONTACTO */
+
+        .contacto {
+            background-color: #181818;
+            padding: 60px 0;
+        }
+
+        .contacto p {
+            color: #cccccc;
+            font-size: 18px;
+        }
+
+
+        /* FOOTER */
+
+        footer {
+            background-color: #000000;
+            color: #aaaaaa;
+            padding: 30px 0;
+        }
+
+
+        /* CELULAR */
+
+        @media (max-width: 768px) {
+
+            .titulo {
+                font-size: 40px;
+            }
+
+            .descripcion {
+                font-size: 18px;
+            }
+
+        }
+
+    </style>
+</head>
+
+<body>
+
+
+    <!-- NAVBAR -->
+
+    <nav class="navbar navbar-expand-lg navbar-dark">
+
+        <div class="container">
+
+            <a class="navbar-brand" href="#">
+                D'<span>NAL</span> Reparaciones
+            </a>
+
+            <button
+                class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#menu"
+                aria-controls="menu"
+                aria-expanded="false"
+                aria-label="Abrir menú">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="menu">
+
+                <ul class="navbar-nav ms-auto align-items-lg-center">
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">
+                            Inicio
+                        </a>
+                    </li>
+
+                    {% if user.is_authenticated %}
+
+                    <div class="d-flex align-items-center gap-2">
+                        <a href="{% url 'editar_perfil' %}" class="btn btn-outline-light">
+                            👤 {{ user.username }}
+                        </a>
+
+                    </div>
+                    
+                    <li class="nav-item ms-lg-3 mt-2 mt-lg-0">
+                        <a class="btn btn-login" href="{% url 'reparacion_list' %}">Reparaciones</a>
+                    </li>
+                    
+                    <li class="nav-item ms-lg-2 mt-2 mt-lg-0">
+                       <form action = "{% url 'logout' %}" method="post"> 
+                            {% csrf_token %}
+                            <input type="submit" value="Cerrar sesion" class="btn btn-danger">
+                        </form>
+                    </li>
+
+                    {% else %}
+
+                    <li class="nav-item ms-lg-3 mt-2 mt-lg-0">
+                        <a class="btn btn-login" href="{% url 'login' %}" class="btn btn-outline-light">Iniciar sesión</a>
+                    </li>
+                    
+                    <li class="nav-item ms-lg-2 mt-2 mt-lg-0">
+                        <a class="btn btn-register" href="{% url 'registro' %}" class="btn btn-danger">Registrarse</a>
+                    </li>
+                    {% endif %}
+                </ul>
+
+            </div>
+
+        </div>
+
+    </nav>
+
+
+    <!-- PRESENTACIÓN PRINCIPAL -->
+     
+{% block content %}
+    <section class="principal">
+
+        <div class="container">
+
+            <div class="row">
+
+                <div class="col-lg-8">
+
+                    <h1 class="titulo">
+                        TALLER
+                        <span class="rojo">INDUSTRIAL</span>
+                    </h1>
+
+                    <p class="descripcion">
+                        Reparación y mantenimiento de herramientas
+                        a combustión, eléctricas y a batería.
+                    </p>
+
+                    <p class="text-secondary">
+                        Servicio especializado para mantener tus herramientas
+                        funcionando de manera segura y eficiente.
+                    </p>
+
+                    <a href="{% url 'maquina_list' %}" class="btn boton-principal mt-3">
+                        VER HERRAMIENTAS
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- SERVICIOS -->
+
+    <section class="servicios">
+
+        <div class="container">
+
+            <h2 class="titulo-seccion text-center">
+                NUESTROS SERVICIOS
+            </h2>
+
+            <div class="row g-4">
+
+
+                <div class="col-md-6 col-lg-3">
+
+                    <div class="servicio text-center">
+
+                        <div class="icono">
+                            <i class="bi bi-tools"></i>
+                        </div>
+
+                        <h4>
+                            Combustión
+                        </h4>
+
+                        <p>
+                            Reparación y mantenimiento de herramientas
+                            a combustión.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-md-6 col-lg-3">
+
+                    <div class="servicio text-center">
+
+                        <div class="icono">
+                            <i class="bi bi-battery-charging"></i>
+                        </div>
+
+                        <h4>
+                            Batería
+                        </h4>
+
+                        <p>
+                            Servicio y reparación de herramientas
+                            a batería.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-md-6 col-lg-3">
+
+                    <div class="servicio text-center">
+
+                        <div class="icono">
+                            <i class="bi bi-gear"></i>
+                        </div>
+
+                        <h4>
+                            Mantenimiento
+                        </h4>
+
+                        <p>
+                            Mantenimiento preventivo para prolongar
+                            la vida útil de tus herramientas.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-md-6 col-lg-3">
+
+                    <div class="servicio text-center">
+
+                        <div class="icono">
+                            <i class="bi bi-wrench-adjustable"></i>
+                        </div>
+
+                        <h4>
+                            Reparaciones
+                        </h4>
+
+                        <p>
+                            Diagnóstico y reparación de diferentes
+                            tipos de herramientas.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- MARCAS -->
+
+    <section class="marcas">
+
+        <div class="container">
+
+            <h2 class="titulo-seccion text-center">
+                SERVICE OFICIAL
+            </h2>
+
+            <div class="row g-4 text-center">
+
+                <div class="col-md-4">
+
+                    <div class="marca">
+                        LUSQTOFF
+                    </div>
+
+                </div>
+
+                <div class="col-md-4">
+
+                    <div class="marca">
+                        DAEWOO
+                    </div>
+
+                </div>
+
+                <div class="col-md-4">
+
+                    <div class="marca">
+                        EINHELL
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- CONTACTO RÁPIDO -->
+
+    <section class="contacto">
+
+        <div class="container">
+
+            <div class="row align-items-center">
+
+                <div class="col-md-8">
+
+                    <h2>
+                        ¿Necesitás reparar una herramienta?
+                    </h2>
+
+                    <p>
+                        Ponete en contacto con nosotros para consultar
+                        sobre reparaciones y mantenimiento.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+{% endblock %}
+
+    <!-- FOOTER -->
+
+    <footer>
+
+        <div class="container text-center">
+
+            <h5>
+                D'NAL Reparaciones
+            </h5>
+
+            <p class="mb-1">
+                Reparación y mantenimiento de herramientas.
+            </p>
+
+            <p class="mb-0">
+                © 2026 D'NAL Reparaciones
+            </p>
+
+        </div>
+
+    </footer>
+
+
+    <!-- Bootstrap JavaScript -->
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
+
+
+

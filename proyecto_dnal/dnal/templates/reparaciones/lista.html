@@ -1,0 +1,43 @@
+{% extends 'principal.html' %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Historial de Reparaciones</h2>
+        <a href="{% url 'reparacion_create' %}" class="btn btn-success">+ Nueva Reparación</a>
+    </div>
+
+    <div class="table-responsive shadow-sm rounded">
+        <table class="table table-hover align-middle mb-0 bg-white">
+            <thead class="table-dark">
+                <tr>
+                    <th>Máquina</th>
+                    <th>Estado</th>
+                    <th>Problema</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for reparacion in reparaciones %}
+                <tr>
+                    <td><strong>{{ reparacion.maquina }}</strong></td>
+                    <td>
+                        <span class="badge bg-info text-dark">{{ reparacion.estado }}</span>
+                    </td>
+                    <td>{{ reparacion.problema|truncatewords:10 }}</td>
+                    <td>
+                        <a href="{% url 'reparacion_detail' reparacion.pk %}" class="btn btn-sm btn-outline-primary">Ver</a>
+                        <a href="{% url 'reparacion_update' reparacion.pk %}" class="btn btn-sm btn-outline-warning">Editar</a>
+                        <a href="{% url 'reparacion_delete' reparacion.pk %}" class="btn btn-sm btn-outline-danger">Eliminar</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4" class="text-center py-4 text-muted">No hay reparaciones registradas.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends 'principal.html' %}
+
+{% block content %}
+<div class="container my-5" style="max-width: 650px;">
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">Datos de la Reparación</h4>
+        </div>
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <div class="d-flex justify-content-between mt-4">
+                    <a href="{% url 'reparacion_list' %}" class="btn btn-secondary">Cancelar</a>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

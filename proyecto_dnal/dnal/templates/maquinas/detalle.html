@@ -1,0 +1,26 @@
+{% extends 'principal.html' %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+            <h3 class="mb-0">{{ maquina.nombre }}</h3>
+        </div>
+        <div class="card-body">
+            <p><strong>Tipo:</strong> {{ maquina.tipo }}</p>
+            <p><strong>Marca:</strong> {{ maquina.marca }}</p>
+            <p><strong>Modelo:</strong> {{ maquina.modelo }}</p>
+            <hr>
+            <p><strong>Descripción:</strong></p>
+            <p>{{ maquina.descripcion }}</p>
+        </div>
+        <div class="card-footer d-flex justify-content-between">
+            <a href="{% url 'maquina_list' %}" class="btn btn-secondary">Volver a la lista</a>
+            <div>
+                <a href="{% url 'maquina_update' maquina.pk %}" class="btn btn-warning">Editar</a>
+                <a href="{% url 'maquina_delete' maquina.pk %}" class="btn btn-danger">Eliminar</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends 'principal.html' %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="card shadow-sm">
+        <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+            <h3 class="mb-0">Reparación: {{ reparacion.maquina }}</h3>
+            <span class="badge bg-warning text-dark">{{ reparacion.estado }}</span>
+        </div>
+        <div class="card-body">
+            <p><strong>Problema reportado:</strong></p>
+            <p class="text-muted">{{ reparacion.problema }}</p>
+            <hr>
+            <p><strong>Trabajo realizado:</strong></p>
+            <p>{{ reparacion.trabajo_realizado|default:"Aún sin especificar" }}</p>
+            <p><strong>Repuestos utilizados:</strong> {{ reparacion.repuestos|default:"Ninguno" }}</p>
+            <hr>
+            <div class="row">
+                <div class="col-md-4">
+                    <p><strong>Costo de repuestos:</strong> ${{ reparacion.costo_repuestos }}</p>
+                </div>
+                <div class="col-md-4">
+                    <p><strong>Costo de mano de obra:</strong> ${{ reparacion.costo_mano_obra }}</p>
+                </div>
+                <div class="col-md-4">
+                    <p><strong>Fecha de entrega:</strong> {{ reparacion.fecha_entrega|default:"Pendiente" }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer d-flex justify-content-between">
+            <a href="{% url 'reparacion_list' %}" class="btn btn-secondary">Volver al listado</a>
+            <div>
+                <a href="{% url 'reparacion_update' reparacion.pk %}" class="btn btn-warning">Editar</a>
+                <a href="{% url 'reparacion_delete' reparacion.pk %}" class="btn btn-danger">Eliminar</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
